@@ -1,4 +1,8 @@
-<div class="container">
+<div>
+  <p *ngIf="loading" class="text-center" appTitle>Cargando</p>
+</div>
+<div *ngIf="!loading" class="container">
   <h1 appTitle class="text-center">Listado de alumnos</h1>
   <app-students></app-students>
+  <p appTitle class="text-center">Los alumnos incriptos son {{counter}}</p>
 </div>

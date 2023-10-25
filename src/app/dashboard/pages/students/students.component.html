@@ -1,4 +1,4 @@
-<app-students-table [dataSource]="students" (editStudent)="onEditStudent($event)" (deleteStudent)="onDeleteStudent($event)"></app-students-table>
-<div class="container text-center">
-    <button class="mt-4" (click)="openStudentsDialog()" mat-raised-button color="accent">Agregar alumno</button>
-</div> 
+<app-students-table
+  [dataSource]="(students | async ) || []"
+></app-students-table>
+

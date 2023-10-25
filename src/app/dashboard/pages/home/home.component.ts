@@ -1,20 +1,73 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnDestroy } from '@angular/core';
+import { Student } from '../students/models';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
-  alumnForm: FormGroup;
+export class HomeComponent implements OnDestroy {
+  loading = false;
+  counterSuscription: Subscription;
+  constructor() {
+    this.getStudents();
+    this.counterSuscription = this.getCounter().subscribe({
+      next: (v) => {
+        console.log(v);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => {
+        console.log('Hay 2 alumnos inscriptos');
+      },
+    });
+  }
+  async getStudents(): Promise<void> {
+    this.loading = true;
+    const getStudentsPromise = new Promise((resolve, reject) => {
+      const students: Student[] = [
+        {
+          id: 1,
+          name: 'Malena',
+          lastname: 'Areco',
+          email: 'malenaAreco@gmail.com',
+          age: 20,
+        },
+      ];
+      setTimeout(() => {
+        reject([students]);
+      }, 1000);
+    });
 
-  constructor(private fb: FormBuilder){
-    this.alumnForm = this.fb.group({
-      name: ['', Validators.required],
-      lastname: ['', Validators.required],
-      email: ['', Validators.required],
-    })
-    }
-    
+    await getStudentsPromise
+      .then((result) => console.log(result))
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        this.loading = false;
+      });
+  }
+
+  ngOnDestroy(): void {
+    console.log('Se destruyó el home');
+    this.counterSuscription.unsubscribe;
+  }
+
+  counter = 0
+  getCounter(): Observable<Number> {
+    return new Observable((Suscriber) => {
+      this.counter = 0;
+      setInterval(() => {
+        this.counter++;
+        Suscriber.next(this.counter);
+
+        if (this.counter === 2) {
+          Suscriber.complete();
+        }
+      }, 1000);
+    });
+  }
 }

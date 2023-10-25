@@ -9,13 +9,6 @@ import { Student } from '../../models';
 export class StudentsTableComponent {
   @Input()
   dataSource: Student[] = [];
-
-  @Output()
-  deleteStudent = new EventEmitter<number>()
-
-  @Output()
-  editStudent = new EventEmitter<Student>()
-
   
-  displayedColumns = ['id','fullname', 'email', 'actions']
+  displayedColumns = ['id','fullname', 'email']
 }

@@ -2,32 +2,33 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
 
 @Pipe({
-  name: 'formErrors'
+  name: 'formErrors',
 })
 export class FormErrorsPipe implements PipeTransform {
-
-  transform(value: ValidationErrors | null | undefined, ...args: unknown[]): unknown {
+  transform(
+    value: ValidationErrors | null | undefined,
+    ...args: unknown[]
+  ): unknown {
     console.log(value);
 
     const errorMessages: String[] = [];
-    if(!value){
+    if (!value) {
       return '';
     }
-    if(value){
-      if('required' in value){
+    if (value) {
+      if ('required' in value) {
         errorMessages.push('Este campo es requerido');
       }
-  
-      if('email' in value){
+
+      if ('email' in value) {
         errorMessages.push('Debe ingresar un email válido');
       }
 
-      if('minLength'){
+      if ('minLength') {
         errorMessages.push('Debe ingresar al menos 3 carácteres');
       }
     }
-          
-    return errorMessages.join('. ');
-    }
 
+    return errorMessages.join('. ');
+  }
 }

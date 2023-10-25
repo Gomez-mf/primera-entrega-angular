@@ -14,6 +14,7 @@ import { SharedModule } from '../shared/shared.module';
 import { StudentsComponent } from './pages/students/students.component';
 import { StudentsDialogComponent } from './pages/students/components/students-dialog/students-dialog.component';
 import { StudentsTableComponent } from './pages/students/components/students-table/students-table.component';
+import { StudentsModule} from './pages/students/students.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { StudentsTableComponent } from './pages/students/components/students-tab
     MatGridListModule,
     MatInputModule,
     MatDialogModule,
+    StudentsModule
   ],
   exports: [
     DashboardComponent
